@@ -19,60 +19,60 @@ class PayloadSpec extends Specification {
 
     def "Test countries"() {
         when:
-        Address a = new Address.CanadianAddress(new CanadianAddressRec(Country.CA, Province.AB, "589", "Hodgson Rd", "T6R3N5"))
-        Address a2 = new Address.CanadianAddress(new CanadianAddressRec(Country.COUNTRIES.getOrDefault("Canada", null), Province.PROVINCES.getOrDefault("Alberta", null), "589", "Hodgson Rd", "T6R3N5"))
-        Address a3 = new Address.CanadianAddress(new CanadianAddressRec(Country.COUNTRIES.getOrDefault("Unknown", null), Province.PROVINCES.getOrDefault("Unknown", null), "589", "Hodgson Rd", "T6R3N5"))
+        Address a = new Address.CanadianAddress(new CanadianAddressRec(Country.CA, Province.AB, "500", "Hodgson Way", "T6T3N3"))
+        Address a2 = new Address.CanadianAddress(new CanadianAddressRec(Country.COUNTRIES.getOrDefault("Canada", null), Province.PROVINCES.getOrDefault("Alberta", null), "600", "Jen Rd", "T6S3N3"))
+        Address a3 = new Address.CanadianAddress(new CanadianAddressRec(Country.COUNTRIES.getOrDefault("Unknown", null), Province.PROVINCES.getOrDefault("Unknown", null), "700", "Barnet Rd", "T6T3N6"))
         Address b = new Address.UsaAddress(new UsaAddressRec(Country.US, State.AL, "1", "street", "12345"))
         Address b2 = new Address.UsaAddress(new UsaAddressRec(Country.COUNTRIES.getOrDefault("United States",null), State.STATES.getOrDefault("Alabama", null), "1", "street", "12345"))
         Address b3 = new Address.UsaAddress(new UsaAddressRec(Country.COUNTRIES.getOrDefault("Unknown",null), State.STATES.getOrDefault("Unknown", null), "1", "street", "12345"))
         Address c = new Address.InternationalAddress(new InternationalAddressRec(Country.AG, "Somewhere", "2", "Avenue", "98989"))
 
         def payloadCdn = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("John", "Raymond", LocalDate.of(1960, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Jane", "Ali", LocalDate.of(1954, Month.MAY, 23)),
                 a,
                 a2
         )
         def payloadWithA2 = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("Bob", "Raymond", LocalDate.of(1970, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Anne", "Ali", LocalDate.of(1969, Month.MAY, 23)),
                 a2,
                 a3
         )
         def payloadWithA3 = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("Tim", "Raymond", LocalDate.of(1957, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Samanta", "Ali", LocalDate.of(1952, Month.MAY, 23)),
                 a3,
                 a
         )
         def payloadUs = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("Pat", "Raymond", LocalDate.of(1986, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Mary", "Ali", LocalDate.of(1982, Month.MAY, 23)),
                 b,
                 b2
         )
         def payloadWithB2 = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("James", "Raymond", LocalDate.of(1990, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Juliette", "Ali", LocalDate.of(1990, Month.MAY, 23)),
                 b2,
                 b3
         )
         def payloadWithB3 = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("Jack", "Raymond", LocalDate.of(1989, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Kim", "Ali", LocalDate.of(1988, Month.MAY, 23)),
                 b3,
                 b
         )
         def payloadInter = new JsonPayload(
-                new PersonalInfo("Jocelyn", "Raymond", LocalDate.of(1967, Month.FEBRUARY, 16)),
+                new PersonalInfo("Jule", "Raymond", LocalDate.of(1999, Month.FEBRUARY, 16)),
                 MaritalStatus.MARRIED,
-                new PersonalInfo("Julie", "Ali", LocalDate.of(1958, Month.MAY, 23)),
+                new PersonalInfo("Johanne", "Ali", LocalDate.of(1995, Month.MAY, 23)),
                 c,
                 c
         )
@@ -86,7 +86,6 @@ class PayloadSpec extends Specification {
         def s7 = mapper.writeValueAsString(payloadWithB3)
 
         then:
-        s1.contains("Jocelyn")
         s1.contains("\"residence\":{\"address\":{\"country\":\"CA\",\"province\":\"AB\"")
         s2.contains("\"residence\":{\"address\":{\"country\":\"US\",\"state\":\"AL\"")
         s3.contains("\"residence\":{\"address\":{\"country\":\"AG\",\"region\":\"Somewhere")
@@ -107,20 +106,20 @@ class PayloadSpec extends Specification {
 /*
 {
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "John",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1960,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Jane",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1954,
       5,
       23
     ]
@@ -129,36 +128,36 @@ class PayloadSpec extends Specification {
     "address": {
       "country": "CA",
       "province": "AB",
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "500",
+      "streetName": "Hodgson Way",
+      "postalCode": "T6T3N3"
     }
   },
   "mailing": {
     "address": {
       "country": "CA",
       "province": "AB",
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "600",
+      "streetName": "Jen Rd",
+      "postalCode": "T6S3N3"
     }
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "Pat",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1986,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Mary",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1982,
       5,
       23
     ]
@@ -183,20 +182,20 @@ class PayloadSpec extends Specification {
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "Jule",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1999,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Johanne",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1995,
       5,
       23
     ]
@@ -221,20 +220,20 @@ class PayloadSpec extends Specification {
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "Bob",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1970,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Anne",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1969,
       5,
       23
     ]
@@ -243,36 +242,36 @@ class PayloadSpec extends Specification {
     "address": {
       "country": "CA",
       "province": "AB",
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "600",
+      "streetName": "Jen Rd",
+      "postalCode": "T6S3N3"
     }
   },
   "mailing": {
     "address": {
       "country": null,
       "province": null,
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "700",
+      "streetName": "Barnet Rd",
+      "postalCode": "T6T3N6"
     }
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "Tim",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1957,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Samanta",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1952,
       5,
       23
     ]
@@ -281,36 +280,36 @@ class PayloadSpec extends Specification {
     "address": {
       "country": null,
       "province": null,
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "700",
+      "streetName": "Barnet Rd",
+      "postalCode": "T6T3N6"
     }
   },
   "mailing": {
     "address": {
       "country": "CA",
       "province": "AB",
-      "streetNumber": "589",
-      "streetName": "Hodgson Rd",
-      "postalCode": "T6R3N5"
+      "streetNumber": "500",
+      "streetName": "Hodgson Way",
+      "postalCode": "T6T3N3"
     }
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "James",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1990,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Juliette",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1990,
       5,
       23
     ]
@@ -335,20 +334,20 @@ class PayloadSpec extends Specification {
   }
 }{
   "personalInfo": {
-    "firstname": "Jocelyn",
+    "firstname": "Jack",
     "lastname": "Raymond",
     "dob": [
-      1967,
+      1989,
       2,
       16
     ]
   },
   "maritalSatus": "MARRIED",
   "spouseInfo": {
-    "firstname": "Julie",
+    "firstname": "Kim",
     "lastname": "Ali",
     "dob": [
-      1958,
+      1988,
       5,
       23
     ]
